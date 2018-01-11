@@ -2,40 +2,32 @@ version: '2'
 
 services:
 
-  dns:
-    build: 'dnsmasq'
-    ports:
-      - 53:53/tcp
-      - 53:53/udp
-    cap_add:
-      - NET_ADMIN
-
   git:
-    image: 'gogs/gogs-rpi'
+    image: 'gogs/gogs'
     volumes:
       - 'git-data:/data'
     links:
-      - 'gitdb'
+      - 'db'
     depends_on:
-      - 'gitdb'
+      - 'db'
+    environment:
+      - VIRTUAL_HOST=git.callisto.local
 
-  gitdb:
-    image: postgres
-    env_file: gitdb.env
+  db:
+    image: 'postgres'
+    env_file: db.env
     volumes:
-      - 'gitdb-data:/var/lib/postgresql/data'
+      - 'db-data:/var/lib/postgresql/data'
     
   proxy:
-    build: 'caddy'
+    image: 'jwilder/nginx-proxy'
     ports:
       - 80:80
-      - 443:443
     volumes:
-      - './Caddyfile:/etc/Caddyfile'
-    links:
-      - 'git'
+      - '/var/run/docker.sock:/tmp/docker.sock:ro'
+    environment:
+      - DEFAULT_HOST=callisto.local
 
 volumes:
   git-data:
-  gitdb-data:
-  caddy:
+  db-data:
