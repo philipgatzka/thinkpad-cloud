@@ -5,28 +5,31 @@ services:
   git:
     image: 'gogs/gogs'
     volumes:
-      - 'git-data:/data'
+      - git-data:/data
     links:
       - 'db'
     depends_on:
       - 'db'
-    environment:
-      - VIRTUAL_HOST=git.callisto.local
+    ports:
+      - '3000'
+    env_file: git.env
 
   db:
     image: 'postgres'
     env_file: db.env
     volumes:
-      - 'db-data:/var/lib/postgresql/data'
+      - db-data:/var/lib/postgresql/data
     
   proxy:
-    image: 'jwilder/nginx-proxy'
+    image: jwilder/nginx-proxy
     ports:
-      - 80:80
+      - '80:80'
+      - '443:443'
     volumes:
-      - '/var/run/docker.sock:/tmp/docker.sock:ro'
-    environment:
-      - DEFAULT_HOST=callisto.local
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+      - /home/philip/certs:/etc/nginx/certs
+    depends_on:
+      - 'git'
 
 volumes:
   git-data:
