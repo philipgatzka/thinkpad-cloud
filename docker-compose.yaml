@@ -10,9 +10,16 @@ services:
       - 'db'
     depends_on:
       - 'db'
-    ports:
-      - '3000'
     env_file: git.env
+
+  mopidy:
+    image: 'wernight/mopidy'
+    volumes:
+      - ./mopidy/media:/var/lib/mopidy/media:ro
+      - ./mopidy/local:/var/lib/mopidy/local
+      - ./mopidy.cmd.sh:/mopidy.cmd.sh
+    command: /mopidy.cmd.sh
+    env_file: mopidy.env
 
   db:
     image: 'postgres'
@@ -27,9 +34,10 @@ services:
       - '443:443'
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
-      - /home/philip/certs:/etc/nginx/certs
+      - ./certs:/etc/nginx/certs
     depends_on:
       - 'git'
+      - 'mopidy'
 
 volumes:
   git-data:
