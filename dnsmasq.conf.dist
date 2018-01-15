@@ -1,0 +1,15 @@
+# Never forward plain names (without a dot or domain part)
+domain-needed
+# Never forward addresses in the non-routed address spaces.
+bogus-priv
+
+# Add local-only domains here, queries in these domains are answered
+# from /etc/hosts or DHCP only.
+local=//
+
+# Default nameserver
+server=8.8.4.4
+server=8.8.8.8
+
+# Explicitly define host-ip mappings
+address=//

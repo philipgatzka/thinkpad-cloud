@@ -11,21 +11,46 @@ services:
     depends_on:
       - 'db'
     env_file: git.env
+    restart: always
 
   mopidy:
     image: 'wernight/mopidy'
     volumes:
       - ./mopidy/media:/var/lib/mopidy/media:ro
       - ./mopidy/local:/var/lib/mopidy/local
-      - ./mopidy.cmd.sh:/mopidy.cmd.sh
-    command: /mopidy.cmd.sh
+      - ./mopidy-cmd.sh:/mopidy-cmd.sh
+      - ./podcasts.opml:/podcasts.opml:ro
+    command: /mopidy-cmd.sh
     env_file: mopidy.env
+    restart: always
+
+  nextcloud:
+    image: 'nextcloud'
+    volumes:
+      - nextcloud-data:/var/www/html
+    env_file: nextcloud.env
+    links:
+      - 'db'
+    depends_on:
+      - 'db'
+    restart: always
+
+  huginn:
+    image: 'cantino/huginn'
+    env_file: huginn.env
+    links:
+      - 'db'
+    depends_on:
+      - 'db'
+    restart: always
 
   db:
     image: 'postgres'
     env_file: db.env
     volumes:
       - db-data:/var/lib/postgresql/data
+      - ./postgres-users.sql:/docker-entrypoint-initdb.d/postgres-users.sql
+    restart: always
     
   proxy:
     image: jwilder/nginx-proxy
@@ -38,7 +63,22 @@ services:
     depends_on:
       - 'git'
       - 'mopidy'
+      - 'nextcloud'
+      - 'huginn'
+    restart: always
+
+  dns:
+    image: andyshinn/dnsmasq
+    ports:
+      - '53:53/tcp'
+      - '53:53/udp'
+    cap_add:
+      - NET_ADMIN
+    volumes:
+      - ./dnsmasq.conf:/etc/dnsmasq.conf
+    restart: always
 
 volumes:
   git-data:
   db-data:
+  nextcloud-data:

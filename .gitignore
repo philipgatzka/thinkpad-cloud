@@ -1,2 +1,5 @@
 *.env
 *.sh
+*.conf
+*.opml
+*.sql
