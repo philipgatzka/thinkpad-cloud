@@ -36,7 +36,7 @@ services:
     restart: always
 
   huginn:
-    image: 'cantino/huginn'
+    image: 'huginn/huginn'
     env_file: huginn.env
     links:
       - 'db'
