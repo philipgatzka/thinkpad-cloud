@@ -60,6 +60,7 @@ services:
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
       - ./certs:/etc/nginx/certs
+      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
     depends_on:
       - 'git'
       - 'mopidy'
