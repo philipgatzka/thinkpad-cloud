@@ -5,11 +5,11 @@ bogus-priv
 
 # Add local-only domains here, queries in these domains are answered
 # from /etc/hosts or DHCP only.
-local=//
+local=/somehost/
 
 # Default nameserver
-server=8.8.4.4
-server=8.8.8.8
+server=ip
 
 # Explicitly define host-ip mappings
-address=//
+address=/somehost/ip
+
