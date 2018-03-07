@@ -44,6 +44,29 @@ services:
       - 'db'
     restart: always
 
+  paperless_web:
+    image: 'danielquinn/paperless'
+    volumes:
+      - paperless-data:/usr/src/paperless/data
+      - paperless-media:/usr/src/paperless/media
+    env_file: paperless.env
+    environment:
+      - PAPERLESS_OCR_LANGUAGES=
+    expose:
+      - '8000'
+    command: ["runserver", "--insecure", "0.0.0.0:8000"]
+
+  paperless_consumer:
+    image: 'danielquinn/paperless'
+    depends_on:
+      - 'paperless_web'
+    volumes:
+      - paperless-data:/usr/src/paperless/data
+      - paperless-media:/usr/src/paperless/media
+      - ./paperless/consume:/consume
+    env_file: paperless.env
+    command: ["document_consumer"]
+
   db:
     image: 'postgres'
     env_file: db.env
@@ -66,6 +89,7 @@ services:
       - 'mopidy'
       - 'nextcloud'
       - 'huginn'
+      - 'paperless_web'
     restart: always
 
   dns:
@@ -83,3 +107,5 @@ volumes:
   git-data:
   db-data:
   nextcloud-data:
+  paperless-data:
+  paperless-media:
