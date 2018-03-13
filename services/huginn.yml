@@ -1,0 +1,8 @@
+huginn:
+  image: 'huginn/huginn'
+  env_file: '../huginn.env'
+  links:
+    - 'db'
+  depends_on:
+    - 'db'
+  restart: always

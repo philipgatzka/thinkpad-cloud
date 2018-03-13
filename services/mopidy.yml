@@ -1,0 +1,10 @@
+mopidy:
+  image: 'wernight/mopidy'
+  volumes:
+    - ../mopidy/media:/var/lib/mopidy/media:ro
+    - ../mopidy/local:/var/lib/mopidy/local
+    - ../mopidy-cmd.sh:/mopidy-cmd.sh
+    - ../podcasts.opml:/podcasts.opml:ro
+  command: /mopidy-cmd.sh
+  env_file: '../mopidy.env'
+  restart: always

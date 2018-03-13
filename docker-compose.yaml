@@ -3,110 +3,50 @@ version: '2'
 services:
 
   git:
-    image: 'gogs/gogs'
-    volumes:
-      - git-data:/data
-    links:
-      - 'db'
-    depends_on:
-      - 'db'
-    env_file: git.env
-    ports:
-      - '22:22'
-    restart: always
+    extends:
+      file: services/git.yml
+      service: git
 
   mopidy:
-    image: 'wernight/mopidy'
-    volumes:
-      - ./mopidy/media:/var/lib/mopidy/media:ro
-      - ./mopidy/local:/var/lib/mopidy/local
-      - ./mopidy-cmd.sh:/mopidy-cmd.sh
-      - ./podcasts.opml:/podcasts.opml:ro
-    command: /mopidy-cmd.sh
-    env_file: mopidy.env
-    restart: always
-
+    extends:
+      file: services/mopidy.yml
+      service: mopidy
+    
   nextcloud:
-    image: 'nextcloud'
-    volumes:
-      - nextcloud-data:/var/www/html
-    env_file: nextcloud.env
-    links:
-      - 'db'
-    depends_on:
-      - 'db'
-    restart: always
-
+    extends:
+      file: services/nextcloud.yml
+      service: nextcloud
+    
   huginn:
-    image: 'huginn/huginn'
-    env_file: huginn.env
-    links:
-      - 'db'
-    depends_on:
-      - 'db'
-    restart: always
-
+    extends:
+      file: services/huginn.yml
+      service: huginn
+    
   paperless_web:
-    image: 'danielquinn/paperless'
-    volumes:
-      - paperless-data:/usr/src/paperless/data
-      - paperless-media:/usr/src/paperless/media
-    env_file: paperless.env
-    environment:
-      - PAPERLESS_OCR_LANGUAGES=
-    expose:
-      - '8000'
-    command: ["runserver", "--insecure", "0.0.0.0:8000"]
-    restart: always
-
+    extends:
+      file: services/paperless.yml
+      service: paperless_web
+    
   paperless_consumer:
-    image: 'danielquinn/paperless'
-    depends_on:
-      - 'paperless_web'
-    volumes:
-      - paperless-data:/usr/src/paperless/data
-      - paperless-media:/usr/src/paperless/media
-      - ./paperless/consume:/consume
-    env_file: paperless.env
-    command: ["document_consumer"]
-    restart: always
-
+    extends:
+      file: services/paperless.yml
+      service: paperless_consumer
+    
   db:
-    image: 'postgres'
-    env_file: db.env
-    volumes:
-      - db-data:/var/lib/postgresql/data
-      - ./postgres-users.sql:/docker-entrypoint-initdb.d/postgres-users.sql
-    restart: always
+    extends:
+      file: services/db.yml
+      service: db
     
   proxy:
-    image: jwilder/nginx-proxy
-    ports:
-      - '80:80'
-      - '443:443'
-    volumes:
-      - /var/run/docker.sock:/tmp/docker.sock:ro
-      - ./certs:/etc/nginx/certs
-      - ./proxy.conf:/etc/nginx/conf.d/proxy.conf:ro
-    depends_on:
-      - 'git'
-      - 'mopidy'
-      - 'nextcloud'
-      - 'huginn'
-      - 'paperless_web'
-    restart: always
+    extends:
+      file: services/proxy.yml
+      service: proxy
 
   dns:
-    image: andyshinn/dnsmasq
-    ports:
-      - '53:53/tcp'
-      - '53:53/udp'
-    cap_add:
-      - NET_ADMIN
-    volumes:
-      - ./dnsmasq.conf:/etc/dnsmasq.conf
-    restart: always
-
+    extends:
+      file: services/dns.yml
+      service: dns
+    
 volumes:
   git-data:
   db-data:

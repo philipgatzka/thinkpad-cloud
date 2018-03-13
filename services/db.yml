@@ -1,0 +1,7 @@
+db:
+  image: 'postgres'
+  env_file: '../db.env'
+  volumes:
+    - db-data:/var/lib/postgresql/data
+    - ../postgres-users.sql:/docker-entrypoint-initdb.d/postgres-users.sql
+  restart: always
