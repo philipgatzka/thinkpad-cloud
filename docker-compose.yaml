@@ -11,6 +11,8 @@ services:
     depends_on:
       - 'db'
     env_file: git.env
+    ports:
+      - '22:22'
     restart: always
 
   mopidy:
@@ -55,6 +57,7 @@ services:
     expose:
       - '8000'
     command: ["runserver", "--insecure", "0.0.0.0:8000"]
+    restart: always
 
   paperless_consumer:
     image: 'danielquinn/paperless'
@@ -66,6 +69,7 @@ services:
       - ./paperless/consume:/consume
     env_file: paperless.env
     command: ["document_consumer"]
+    restart: always
 
   db:
     image: 'postgres'
