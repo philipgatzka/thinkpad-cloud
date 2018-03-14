@@ -43,6 +43,24 @@ services:
     extends:
       file: services/paperless/paperless.yml
       service: paperless_consumer
+
+  drone_server:
+    extends:
+      file: services/drone/drone.yml
+      service: drone_server
+    links:
+      - git
+    depends_on:
+      - git
+
+  drone_agent:
+    extends:
+      file: services/drone/drone.yml
+      service: drone_agent
+    links:
+      - drone_server
+    depends_on:
+      - drone_server
     
   db:
     extends:
@@ -59,6 +77,7 @@ services:
       - 'nextcloud'
       - 'huginn'
       - 'paperless_web'
+      - 'drone_server'
 
   dns:
     extends:
@@ -71,3 +90,4 @@ volumes:
   db-data:
   git-data:
   nextcloud-data:
+  drone:

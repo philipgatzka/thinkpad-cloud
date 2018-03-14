@@ -1,0 +1,17 @@
+version: '2'
+
+services:
+  drone_server:
+    image: drone/drone
+    volumes:
+      - drone:/var/lib/drone/
+    env_file: drone_server.env
+    restart: always
+
+  drone_agent:
+    image: drone/agent
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    env_file: drone_agent.env
+    command: agent
+    restart: always
