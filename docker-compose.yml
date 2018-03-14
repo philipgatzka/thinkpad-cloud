@@ -50,8 +50,6 @@ services:
       service: drone_server
     links:
       - git
-    depends_on:
-      - git
 
   drone_agent:
     extends:
