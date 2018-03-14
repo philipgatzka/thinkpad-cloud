@@ -2,9 +2,8 @@ nextcloud:
   image: 'nextcloud'
   volumes:
     - nextcloud-data:/var/www/html
-  env_file: '../nextcloud.env'
-  links:
-    - 'db'
-  depends_on:
-    - 'db'
+  env_file: nextcloud.env
   restart: always
+
+volumes:
+  nextcloud-data:

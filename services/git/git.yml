@@ -2,11 +2,10 @@ git:
   image: 'gogs/gogs'
   volumes:
     - git-data:/data
-  links:
-    - 'db'
-  depends_on:
-    - 'db'
-  env_file: '../git.env'
+  env_file: git.env
   ports:
     - '22:22'
   restart: always
+
+volumes:
+  git-data:

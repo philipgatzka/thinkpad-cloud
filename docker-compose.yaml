@@ -6,6 +6,10 @@ services:
     extends:
       file: services/git.yml
       service: git
+    links:
+      - 'db'
+    depends_on:
+      - 'db'
 
   mopidy:
     extends:
@@ -16,40 +20,47 @@ services:
     extends:
       file: services/nextcloud.yml
       service: nextcloud
+    links:
+      - 'db'
+    depends_on:
+      - 'db'
     
   huginn:
     extends:
-      file: services/huginn.yml
+      file: services/huginn/huginn.yml
       service: huginn
+    links:
+      - 'db'
+    depends_on:
+      - 'db'
     
   paperless_web:
     extends:
-      file: services/paperless.yml
+      file: services/paperless/paperless.yml
       service: paperless_web
     
   paperless_consumer:
     extends:
-      file: services/paperless.yml
+      file: services/paperless/paperless.yml
       service: paperless_consumer
     
   db:
     extends:
-      file: services/db.yml
+      file: services/db/db.yml
       service: db
     
   proxy:
     extends:
-      file: services/proxy.yml
+      file: services/proxy/proxy.yml
       service: proxy
+    depends_on:
+      - 'git'
+      - 'mopidy'
+      - 'nextcloud'
+      - 'huginn'
+      - 'paperless_web'
 
   dns:
     extends:
-      file: services/dns.yml
+      file: services/dns/dns.yml
       service: dns
-    
-volumes:
-  git-data:
-  db-data:
-  nextcloud-data:
-  paperless-data:
-  paperless-media:
