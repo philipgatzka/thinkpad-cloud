@@ -1,26 +1,25 @@
-paperless_web:
-  image: danielquinn/paperless
-  volumes:
-    - paperless-data:/usr/src/paperless/data
-    - paperless-media:/usr/src/paperless/media
-  env_file: paperless.env
-  environment:
-    - PAPERLESS_OCR_LANGUAGES=
-  expose:
-    - '8000'
-  command: ["runserver", "--insecure", "0.0.0.0:8000"]
-  restart: always
+version: '2'
 
-paperless_consumer:
-  image: danielquinn/paperless
-  volumes:
-    - paperless-data:/usr/src/paperless/data
-    - paperless-media:/usr/src/paperless/media
-    - ../paperless/consume:/consume
-  env_file: paperless.env
-  command: ["document_consumer"]
-  restart: always
+services:
+  paperless_web:
+    image: danielquinn/paperless
+    volumes:
+      - paperless-data:/usr/src/paperless/data
+      - paperless-media:/usr/src/paperless/media
+    env_file: paperless.env
+    environment:
+      - PAPERLESS_OCR_LANGUAGES=
+    expose:
+      - '8000'
+    command: ["runserver", "--insecure", "0.0.0.0:8000"]
+    restart: always
 
-volumes:
-  paperless-data:
-  paperless-media:
+  paperless_consumer:
+    image: danielquinn/paperless
+    volumes:
+      - paperless-data:/usr/src/paperless/data
+      - paperless-media:/usr/src/paperless/media
+      - ../paperless/consume:/consume
+    env_file: paperless.env
+    command: ["document_consumer"]
+    restart: always

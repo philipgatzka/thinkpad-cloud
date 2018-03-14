@@ -4,7 +4,7 @@ services:
 
   git:
     extends:
-      file: services/git.yml
+      file: services/git/git.yml
       service: git
     links:
       - 'db'
@@ -13,12 +13,12 @@ services:
 
   mopidy:
     extends:
-      file: services/mopidy.yml
+      file: services/mopidy/mopidy.yml
       service: mopidy
     
   nextcloud:
     extends:
-      file: services/nextcloud.yml
+      file: services/nextcloud/nextcloud.yml
       service: nextcloud
     links:
       - 'db'
@@ -64,3 +64,10 @@ services:
     extends:
       file: services/dns/dns.yml
       service: dns
+
+volumes:
+  paperless-data:
+  paperless-media:
+  db-data:
+  git-data:
+  nextcloud-data:

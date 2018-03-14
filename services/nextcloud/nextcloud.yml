@@ -1,9 +1,9 @@
-nextcloud:
-  image: 'nextcloud'
-  volumes:
-    - nextcloud-data:/var/www/html
-  env_file: nextcloud.env
-  restart: always
+version: '2'
 
-volumes:
-  nextcloud-data:
+services:
+  nextcloud:
+    image: 'nextcloud'
+    volumes:
+      - nextcloud-data:/var/www/html
+    env_file: nextcloud.env
+    restart: always

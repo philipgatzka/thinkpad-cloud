@@ -1,11 +1,11 @@
-git:
-  image: 'gogs/gogs'
-  volumes:
-    - git-data:/data
-  env_file: git.env
-  ports:
-    - '22:22'
-  restart: always
+version: '2'
 
-volumes:
-  git-data:
+services:
+  git:
+    image: 'gogs/gogs'
+    volumes:
+      - git-data:/data
+    env_file: git.env
+    ports:
+      - '22:22'
+    restart: always

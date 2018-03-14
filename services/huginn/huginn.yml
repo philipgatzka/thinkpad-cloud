@@ -1,4 +1,7 @@
-huginn:
-  image: 'huginn/huginn'
-  env_file: huginn.env
-  restart: always
+version: '2'
+
+services:
+  huginn:
+    image: 'huginn/huginn'
+    env_file: huginn.env
+    restart: always
