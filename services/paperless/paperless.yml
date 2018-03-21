@@ -19,7 +19,7 @@ services:
     volumes:
       - paperless-data:/usr/src/paperless/data
       - paperless-media:/usr/src/paperless/media
-      - ../paperless/consume:/consume
+      - ./consume:/consume
     env_file: paperless.env
     command: ["document_consumer"]
     restart: always

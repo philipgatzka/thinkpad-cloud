@@ -34,16 +34,6 @@ services:
     depends_on:
       - 'db'
     
-  paperless_web:
-    extends:
-      file: services/paperless/paperless.yml
-      service: paperless_web
-    
-  paperless_consumer:
-    extends:
-      file: services/paperless/paperless.yml
-      service: paperless_consumer
-
   drone_server:
     extends:
       file: services/drone/drone.yml
@@ -74,7 +64,6 @@ services:
       - 'mopidy'
       - 'nextcloud'
       - 'huginn'
-      - 'paperless_web'
       - 'drone_server'
 
   dns:
@@ -83,8 +72,6 @@ services:
       service: dns
 
 volumes:
-  paperless-data:
-  paperless-media:
   db-data:
   git-data:
   nextcloud-data:
