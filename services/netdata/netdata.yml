@@ -1,0 +1,13 @@
+version: '2'
+
+services:
+  netdata:
+    image: 'firehol/netdata'
+    env_file: netdata.env
+    volumes:
+      - /proc:/host/proc:ro
+      - /sys:/host/sys:ro
+    cap_add:
+      - SYS_PTRACE
+    restart: always
+

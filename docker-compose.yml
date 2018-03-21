@@ -49,6 +49,11 @@ services:
       - drone_server
     depends_on:
       - drone_server
+
+  netdata:
+    extends:
+      file: services/netdata/netdata.yml
+      service: netdata
     
   db:
     extends:
@@ -59,12 +64,6 @@ services:
     extends:
       file: services/proxy/proxy.yml
       service: proxy
-    depends_on:
-      - 'git'
-      - 'mopidy'
-      - 'nextcloud'
-      - 'huginn'
-      - 'drone_server'
 
   dns:
     extends:
