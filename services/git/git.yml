@@ -8,4 +8,4 @@ services:
     env_file: git.env
     ports:
       - '2222:22'
-    restart: always
+

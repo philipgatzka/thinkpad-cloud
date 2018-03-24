@@ -11,3 +11,4 @@ services:
     volumes:
       - ./dnsmasq.conf:/etc/dnsmasq.conf
     restart: always
+

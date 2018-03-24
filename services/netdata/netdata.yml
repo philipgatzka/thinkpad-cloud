@@ -9,5 +9,4 @@ services:
       - /sys:/host/sys:ro
     cap_add:
       - SYS_PTRACE
-    restart: always
 

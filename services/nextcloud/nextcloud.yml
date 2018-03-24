@@ -6,4 +6,4 @@ services:
     volumes:
       - nextcloud-data:/var/www/html
     env_file: nextcloud.env
-    restart: always
+

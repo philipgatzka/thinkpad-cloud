@@ -4,4 +4,4 @@ services:
   huginn:
     image: 'huginn/huginn'
     env_file: huginn.env
-    restart: always
+

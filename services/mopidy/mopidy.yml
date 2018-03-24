@@ -10,4 +10,4 @@ services:
       - ./podcasts.opml:/podcasts.opml:ro
     command: /mopidy-cmd.sh
     env_file: mopidy.env
-    restart: always
+
