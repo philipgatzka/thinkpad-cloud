@@ -1,0 +1,9 @@
+version: '2'
+
+services:
+  node_red:
+    image: 'nodered/node-red-docker:slim-v8'
+    volumes:
+      - 'node-red-data:/data'
+    env_file: 'nodered.env'
+

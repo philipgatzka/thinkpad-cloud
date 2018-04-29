@@ -25,15 +25,6 @@ services:
     depends_on:
       - 'db'
     
-  huginn:
-    extends:
-      file: services/huginn/huginn.yml
-      service: huginn
-    links:
-      - 'db'
-    depends_on:
-      - 'db'
-    
   drone_server:
     extends:
       file: services/drone/drone.yml
@@ -54,6 +45,11 @@ services:
     extends:
       file: services/netdata/netdata.yml
       service: netdata
+
+  node_red:
+    extends:
+      file: services/nodered/nodered.yml
+      service: node_red
     
   db:
     extends:
@@ -75,3 +71,4 @@ volumes:
   git-data:
   nextcloud-data:
   drone:
+  node-red-data:
