@@ -50,7 +50,19 @@ services:
     extends:
       file: services/nodered/nodered.yml
       service: node_red
-    
+
+  paperless_web:
+    extends:
+      file: services/paperless/paperless.yml
+      service: paperless_web
+    depends_on:
+      - 'paperless_consumer'
+
+  paperless_consumer:
+    extends:
+      file: services/paperless/paperless.yml
+      service: paperless_consumer
+
   db:
     extends:
       file: services/db/db.yml
@@ -72,3 +84,5 @@ volumes:
   nextcloud-data:
   drone:
   node-red-data:
+  paperless-data:
+  paperless-media:
