@@ -5,5 +5,6 @@ services:
     image: 'nextcloud'
     volumes:
       - nextcloud-data:/var/www/html
+      - ./my.config.php:/var/www/html/config/my.config.php:ro
     env_file: nextcloud.env
 
