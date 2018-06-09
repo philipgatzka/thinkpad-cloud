@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  firefly:
+    image: 'jc5x/firefly-iii'
+    volumes:
+      - firefly_iii_export:/var/www/firefly-iii/storage/export
+      - firefly_iii_upload:/var/www/firefly-iii/storage/upload
+    env_file: firefly.env
+

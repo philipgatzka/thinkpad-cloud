@@ -63,6 +63,15 @@ services:
       file: services/paperless/paperless.yml
       service: paperless_consumer
 
+  firefly:
+    extends:
+      file: services/firefly/firefly.yml
+      service: firefly
+    links:
+      - db
+    depends_on:
+      - db
+
   db:
     extends:
       file: services/db/db.yml
@@ -86,3 +95,5 @@ volumes:
   node-red-data:
   paperless-data:
   paperless-media:
+  firefly_iii_export:
+  firefly_iii_upload:
