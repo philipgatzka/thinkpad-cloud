@@ -1,0 +1,10 @@
+version: '2'
+
+services:
+  snapcast:
+    image: 'nolte/snapcast-server'
+    command: "-s pipe:///tmp/sharesound/snapfifo?name=Snapcast"
+    ports:
+      - '1704:1704'
+      - '1705:1705'
+

@@ -11,10 +11,23 @@ services:
     depends_on:
       - 'db'
 
+  snapcast:
+    extends:
+      file: services/snapcast/snapcast.yml
+      service: snapcast
+    volumes:
+      - soundshare:/tmp/sharesound
+
   mopidy:
     extends:
       file: services/mopidy/mopidy.yml
       service: mopidy
+    volumes:
+      - soundshare:/tmp/sharesound
+    links:
+      - 'snapcast'
+    depends_on:
+      - 'snapcast'
     
   nextcloud:
     extends:
@@ -97,3 +110,4 @@ volumes:
   paperless-media:
   firefly_iii_export:
   firefly_iii_upload:
+  soundshare:

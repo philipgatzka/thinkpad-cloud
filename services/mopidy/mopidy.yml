@@ -8,6 +8,7 @@ services:
       - ./local:/var/lib/mopidy/local
       - ./mopidy-cmd.sh:/mopidy-cmd.sh
       - ./podcasts.opml:/podcasts.opml:ro
+      - ./mopidy.conf:/etc/mopidy/mopidy.conf
     command: /mopidy-cmd.sh
     env_file: mopidy.env
 

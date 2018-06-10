@@ -1,9 +1,1 @@
-pip install --user Mopidy-Iris Mopidy-Podcast \
-  && echo "[audio]" >> /etc/mopidy/mopidy.conf \
-  && echo "output = pulsesink server=127.0.0.1" >> /etc/mopidy/mopidy.conf \
-  && mopidy local scan && mopidy \
-  -o spotify/username= \
-  -o spotify/password= \
-  -o spotify/client_id= \
-  -o spotify/client_secret= \
-  -o podcast/browse_root=/podcasts.opml
+pip install --user Mopidy-Iris Mopidy-Podcast && mopidy --config /usr/share/mopidy/conf.d:/etc/mopidy/mopidy.conf

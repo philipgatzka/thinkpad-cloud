@@ -1,0 +1,90 @@
+[audio]
+output = audioresample ! audioconvert ! audio/x-raw,rate=48000,channels=2,format=S16LE ! wavenc ! filesink location=/tmp/sharesound/snapfifo
+
+[podcast]
+enabled = true
+browse_root = Podcasts.opml
+
+[iris]
+enabled = true
+country = DE
+locale = de_DE
+snapcast_enabled = true
+snapcast_host = snapcast
+snapcast_port = 1705
+
+[youtube]
+enabled = true
+
+[moped]
+enabled = false
+
+[mpd]
+enabled = true
+hostname = 0.0.0.0
+
+[http]
+enabled = true
+hostname = 0.0.0.0
+
+[stream]
+enabled = true
+protocols = 
+  http
+  https
+  mms
+  rtmp
+  rtmps
+  rtsp
+timeout = 5000
+
+[softwaremixer]
+enabled = true
+
+[file]
+enabled = true
+media_dirs = 
+  $XDG_MUSIC_DIR|Music
+  ~/|Home
+excluded_file_extensions = 
+  .jpg
+  .jpeg
+show_dotfiles = false
+follow_symlinks = false
+metadata_timeout = 1000
+
+[local]
+enabled = true
+library = json
+media_dir = /var/lib/mopidy/media
+scan_timeout = 1000
+scan_flush_threshold = 100
+scan_follow_symlinks = false
+excluded_file_extensions = 
+  .directory
+  .html
+  .jpeg
+  .jpg
+  .log
+  .nfo
+  .png
+  .txt
+
+[spotify]
+enabled = true
+username =
+password =
+client_id =
+client_secret =
+bitrate = 320
+volume_normalization = true
+private_session = false
+timeout = 10
+allow_cache = true
+allow_network = true
+allow_playlists = true
+search_album_count = 20
+search_artist_count = 10
+search_track_count = 50
+toplist_countries = DE
+
